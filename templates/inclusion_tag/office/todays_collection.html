@@ -1,6 +1,29 @@
+{% load office_tag %}
+<!-- <a href="/office/daly_pdf/" class="btn btn-primary">Download Pdf</a> -->
 <div class="text-center">
-    <h5>आजची जमा  <a href="/office/daly_pdf/" class="btn btn-primary">Download Pdf</a></h5>
+    <div><h5>आजची जमा </h5></div>
+    
+    <div class="dropdown">
+        <a class="btn btn-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Download Pdf</a>
+        
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/office/daly_pdf/">All</a></li>
+            {% for t in account_types %}
+                <li><a class="dropdown-item" href="/pdf/account_type_daly_collection_pdf/{{t.id}}">{{t.name}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    
 </div>
+
+<br>
+
+
+
+
+
+
 
 <style>
     .collection-table {
@@ -26,8 +49,19 @@
     <div class="header-collection">कर्मचारी</div>
     <div class="header-collection">रक्कम</div>
     {% for o in office_employee %}
-        <div>{{ o.name }}</div>
+        <div>
+            <div>{{ o.name }}</div>
+            <div>
+                {% for t in account_types %}
+                    <div style="display: grid;grid-template-columns: 1fr 1fr;">
+                        <div>{{t.name}}</div>
+                        <div>{% account_type_daly_collection_total_amount o.id t.id %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
         <div class="text-success"><b>{{ o.credit_amount }}</b></div>
+
     {% endfor %}
     <div style="background-color: #dfffdb;"><b>एकूण</b></div>
     <div style="background-color: #dfffdb;"><b>{{todays_collection}}</b></div>

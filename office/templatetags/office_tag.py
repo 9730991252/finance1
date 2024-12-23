@@ -28,12 +28,14 @@ def todays_collection():
         if a is None:
             a = 0
         office_employee.append({
+            'id':i.id,
             'name': i.name,
             'credit_amount': a
         })
     return {
         'todays_collection': todays_collection['credit_amount__sum'],
-        'office_employee': office_employee
+        'office_employee': office_employee,
+        'account_types':Account_type.objects.filter(status=1)
         }
     
 @register.inclusion_tag('inclusion_tag/office/summary.html')
@@ -58,6 +60,12 @@ def check_account_holde_account(account_type_id, account_holder_id):
         return 1
     else:
         return 0
+    
+@register.simple_tag() 
+def account_type_daly_collection_total_amount(office_employee_id, account_type_id):
+    print(office_employee_id)
+    amount = Transition.objects.filter(date=date.today(), collected_by_id=office_employee_id,account__account_type_id=account_type_id).aggregate(Sum('credit_amount'))
+    return amount['credit_amount__sum']
     
 @register.inclusion_tag('inclusion_tag/office/account_holder_last_five_transaction.html')
 def account_holder_last_five_transaction(account_id):

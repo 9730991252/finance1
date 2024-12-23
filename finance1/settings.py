@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'office',
     'ajax',
     'account_holder',
+    'pdf'
 ]
 
 MIDDLEWARE = [

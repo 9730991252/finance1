@@ -24,4 +24,5 @@ urlpatterns = [
     path('office/', include('office.urls')),
     path('ajax/', include('ajax.urls')),
     path('account_holder/', include('account_holder.urls')),
+    path('pdf/', include('pdf.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
