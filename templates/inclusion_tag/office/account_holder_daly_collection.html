@@ -1,0 +1,18 @@
+{% load office_tag %}
+<div class="table" id="table{{account_holder_id}}">
+    {% for a in account %}
+    <div style="background-color: white;">
+        <div>{{a.name}}</div>
+        <div>{% todays_account_transaction a.id as n %}{% for n in n %}{{n.amount}},&nbsp;{% endfor %}</div>
+    </div>
+    {% endfor %}
+    <div style="background-color: white;">
+        <b>Total</b> &nbsp;
+        <b>{{total_amount}}</b>
+    </div>
+</div>
+<br>
+<script>
+    document.getElementById('table{{account_holder_id}}').style.gridTemplateColumns = 'repeat('+(Number("{{count}}") + 1)+', 1fr)';
+</script>
+

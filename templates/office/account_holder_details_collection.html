@@ -1,0 +1,168 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load office_tag %}
+
+{% include 'include/alert.html' %}
+<div>
+    welcome - {{e.name}}
+</div>
+{% include 'include/office/office_menu.html' %}
+<style>
+    .collection{
+        background-color: #FFC107;
+        color: black;
+        border: none;
+    }
+    .flex{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    .account_box{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 5px;
+        background-color: rgb(154, 248, 255);
+        border-radius: 5px;
+        text-align: center;
+        input{
+            width: 100%;
+        }
+        lable{
+            text-align: center;
+            font-weight: 700;
+        }
+    }
+</style>
+
+<div class="text-center"><h5><b>{{account_holder.holder_name}}</b></h5></div>
+<div class="container">
+<br>
+<div id="date"></div>
+<br>
+<form method="post">
+{% csrf_token %}
+{% for a in account %}
+<div class="account_box">
+<div><label for="">{{a.account_type.name}}</label></div>
+<div><input type="number" oninput="check_zero('amount_input{{forloop.counter}}','{{a.id}}')" class="form-control" placeholder="Credit Amount" id="amount_input{{forloop.counter}}" name="{{a.account_type.name}}amount" required></div>
+</div>
+<div id="total_avalable{{a.id}}"></div>
+<br>
+{% endfor %}
+<div class="account_box">
+<div><label for=""><b>Total</b></label></div>
+<div><input type="number" class="form-control" value="0" id="total_amount" readonly></div>
+</div>
+<br>
+<br>
+<br>
+<div><button type="submit" onclick="document.getElementById('Collect_amount').style.display = 'none';" class="btn btn-danger" name="Collect_amount" id="Collect_amount">Collect</button></div>
+
+</form>
+
+<br>
+
+
+
+
+
+
+</div>
+
+<br>
+
+
+
+{% for a in account %}
+    <div class="text-center">
+        <h5><b>{{a.account_type.name}} Last Five Transaction</b></h5>
+    </div>
+    {% account_holder_last_five_transaction a.id  %}
+<br><br>
+{% endfor %}
+
+
+<!-- 
+<script>
+opining_balence = Number('{{n}}')
+</script>
+
+{% for t in last_five_transaction %}
+
+<div>
+    <div class="flex">
+        <div class="">{{t.added_date}}</div>
+        <div class="">{{t.remark}}</div>
+        {% if t.credit_amount != None %}
+            <div class="text-success"><b>{{t.credit_amount}}</b></div>
+        {% else %}
+            <div class="text-danger"><b>{{t.debit_amount}}</b></div>
+        {% endif %}
+    </div>
+    <div class="text-center">
+        <p style="font-size: 15px;margin-bottom: 0px;margin-top: 5px;">Balence <strong id="opining_balence_div{{t.id}}"></strong></p>
+    </div>
+</div>
+<hr>
+{% if t.credit_amount != None %}
+<script>
+    document.getElementById('opining_balence_div{{t.id}}').innerHTML = opining_balence
+    opining_balence = opining_balence - Number('{{t.credit_amount}}')
+</script>
+{% else %}
+<script>
+    document.getElementById('opining_balence_div{{t.id}}').innerHTML = opining_balence
+    opining_balence = opining_balence + Number('{{t.debit_amount}}')
+</script>
+{% endif %}
+{% endfor %} -->
+
+<script>
+    
+    
+    function check_zero(input_id, account_id){
+        var amount = document.getElementById(input_id).value
+        if (amount < 0){
+            amount = document.getElementById(input_id).value = 0
+        }
+        if (amount >= 0){
+            total_amount += Number(amount)
+            document.getElementById('Collect_amount').style.display = 'unset';
+        }
+
+        total_avalable_balence = Number(document.getElementById('total_avalable_balence' + account_id).innerHTML);
+
+        t = (total_avalable_balence + Number(document.getElementById(input_id).value))
+        document.getElementById('total_avalable' + account_id).innerHTML = `Total Avalable <b>${t}</b>`
+        console.log(document.getElementById('total_avalable' + account_id))
+        calulate_amount()
+    }
+    
+    function calulate_amount(){
+        count = Number('{{account.count}}')
+        amount = 0
+        for (var i = 1; i <= count; i++) {
+            amount += Number(document.getElementById('amount_input' + i).value);
+        }
+        document.getElementById('total_amount').value = amount;
+           
+    }
+
+    
+    //////////////////////////////////////////////////////////////////////////////////////////????????
+    document.getElementById("date").innerHTML = formatAMPM();
+    function formatAMPM() {
+        var d = new Date(),
+    minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
+    hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
+    ampm = d.getHours() >= 12 ? 'pm' : 'am',
+    months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+return days[d.getDay()]+' '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+' '+hours+':'+minutes+ampm;
+}
+</script>
+{% endblock content %}

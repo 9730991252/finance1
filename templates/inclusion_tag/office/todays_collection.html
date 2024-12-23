@@ -1,0 +1,36 @@
+<div class="text-center">
+    <h5>आजची जमा  <a href="/office/daly_pdf/" class="btn btn-primary">Download Pdf</a></h5>
+</div>
+
+<style>
+    .collection-table {
+        padding: 1px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1px;
+        background-color: black;
+    }
+    .collection-table > div {
+        background-color: white;
+        padding: 8px;
+    }
+    .header-collection {
+        font-weight: bold;
+        background-color: #dfffdb !important;
+    }
+</style>
+
+
+<div class="container">
+<div class="collection-table">
+    <div class="header-collection">कर्मचारी</div>
+    <div class="header-collection">रक्कम</div>
+    {% for o in office_employee %}
+        <div>{{ o.name }}</div>
+        <div class="text-success"><b>{{ o.credit_amount }}</b></div>
+    {% endfor %}
+    <div style="background-color: #dfffdb;"><b>एकूण</b></div>
+    <div style="background-color: #dfffdb;"><b>{{todays_collection}}</b></div>
+
+</div>
+</div>

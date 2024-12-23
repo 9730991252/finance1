@@ -1,0 +1,40 @@
+
+<script>
+    opining_balence = Number('{{total_avalable_balence}}')
+    </script>
+    <br>
+
+    <div class="text-center text-success">Avalable Amount <b id="total_avalable_balence{{account_id}}">{{total_avalable_balence}}</b></div>
+
+    <br>
+    
+    {% for t in last_five_transaction %}
+    
+    <div>
+        <div class="flex">
+            <div class="">{{t.added_date}}</div>
+            <div class="">{{t.remark}}</div>
+            {% if t.credit_amount != None %}
+                <div class="text-success"><b>{{t.credit_amount}}</b></div>
+            {% else %}
+                <div class="text-danger"><b>{{t.debit_amount}}</b></div>
+            {% endif %}
+        </div>
+        <div class="text-center">
+            <p style="font-size: 15px;margin-bottom: 0px;margin-top: 5px;">Balence <strong id="opining_balence_div{{t.id}}"></strong></p>
+        </div>
+    </div>
+    <hr>
+    {% if t.credit_amount != None %}
+    <script>
+        document.getElementById('opining_balence_div{{t.id}}').innerHTML = opining_balence
+        opining_balence = opining_balence - Number('{{t.credit_amount}}')
+    </script>
+    {% else %}
+    <script>
+        document.getElementById('opining_balence_div{{t.id}}').innerHTML = opining_balence
+        opining_balence = opining_balence + Number('{{t.debit_amount}}')
+    </script>
+    {% endif %}
+    {% endfor %}
+    

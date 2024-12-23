@@ -1,0 +1,55 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load office_tag %}
+{% include 'include/alert.html' %}
+<div>
+    welcome - {{e.name}}
+</div>
+<style>
+    .account_type_Box{
+        display: grid;
+        gap: 50px;
+        grid-template-columns: repeat(auto-fit, 100px);
+
+        input{
+            border: 1px solid #000000;
+        }
+    }
+</style>
+{% include 'include/office/office_menu.html' %}
+<div class="container text-center">
+
+    <h5><b>{{account_holder.holder_name}}</b></h5>
+    
+    <div class="account_type_Box">
+        {% for a in account_type %}
+        {% check_account_holde_account a.id account_holder.id as n %}
+        <div class="form-check" style="display: flex;gap:   0px;" >
+            <div><input {% if n == 1 %} checked {% endif %} class="form-check-input" onclick="save_holder_acount_type('{{a.id}}')" type="checkbox" value="" id="flexCheckDefault"></div>
+            <div><label class="form-check-label" for="flexCheckDefault">{{a.name}}</label></div>
+        </div>
+        {% endfor %}
+
+    </div>
+    
+    
+</div>
+
+<script>
+    function save_holder_acount_type(account_type_id){
+        $.ajax({
+            url: "{% url 'save_holder_acount_type' %}",
+            method: "GET",
+            data: {
+                'account_type_id': account_type_id,
+                'account_holder_id': '{{account_holder.id}}'
+            },
+            success: function(response) {
+     
+            }
+        });
+    }
+</script>
+{% endblock content %}
