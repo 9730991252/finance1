@@ -68,10 +68,11 @@
 
 <script>
     window.addEventListener('load', function() {
+        file_name = '{{account_type.name}} '+new Date().toLocaleString()+'.pdf'
         var pdf = document.getElementById("canvas");
         var opt = {
             margin: 0.1,
-            filename: 'daly_report.pdf',
+            filename: file_name,
             image: {type: 'jpeg',quality: 98},
             html2canvas: {scale: 2},
             jsPDF: {unit: 'in',format: 'a4',orientaion: 'portrait' }
