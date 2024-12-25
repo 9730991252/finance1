@@ -10,7 +10,7 @@ def account_type_daly_collection_pdf(request, id):
         account_holder = []
         a = Account_holder.objects.filter(status=1)
         for a in a:
-            t = Transition.objects.filter(account_holder_id=a.id,date=date.today()).last()
+            t = Transition.objects.filter(account_holder_id=a.id,account__account_type_id=id,date=date.today()).last()
             if t != None:
                 amount = Transition.objects.filter(account_holder_id=a.id,account__account_type_id=id, date=date.today()).aggregate(Sum('credit_amount'))
                 account_holder.append({'amount':amount['credit_amount__sum'], 'id':a.id,'account_number':a.account_number,'holder_name':a.holder_name,'date':t.added_date})
