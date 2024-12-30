@@ -14,7 +14,7 @@ class Account_holder(models.Model):
     holder_name = models.CharField(max_length=100)
     mobile = models.IntegerField(null=True)
     pin = models.IntegerField(null=True)
-    account_number = models.CharField(max_length=1000, default='')
+    account_number = models.IntegerField(default='')
     status = models.IntegerField(default=1)
     date = models.DateField(auto_now_add=True)
     

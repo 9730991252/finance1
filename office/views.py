@@ -247,7 +247,7 @@ def account_holder(request):
             return redirect('login')
         context={
             'e':e,
-            'account_holder':Account_holder.objects.all(),
+            'account_holder':Account_holder.objects.all().order_by('account_number'),
         }
         return render(request, 'office/account_holder.html', context)
     else:
