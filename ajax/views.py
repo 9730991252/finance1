@@ -10,7 +10,7 @@ def search_account_holder(request):
         words = request.GET['words']
         if words:
             a = Account_holder.objects.filter(Q(holder_name__icontains=words) | Q(account_number__icontains=words) ).order_by('holder_name')
-    cotext={'a':a[0:3]}
+    cotext={'a':a}
     t = render_to_string('ajax/search_account_holder.html', cotext)
     return JsonResponse({'t':t})
 
