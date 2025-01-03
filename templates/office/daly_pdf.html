@@ -43,6 +43,12 @@
                     <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}>{% account_total a.id ac.id %}</td>
                 {% endfor %}
             </tr>
+            <tr id="blank{{a.id}}" style="border-bottom: 1px solid black; display: none;">
+                <td style="border-right: 1px solid black;">&nbsp;</td>
+                {% for ac in account_type %}
+                    <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}> </td>
+                {% endfor %}
+            </tr>
             <tr id="heade{{a.id}}" style="border-bottom: 1px solid black; display: none;">
                 <th style="border-right: 1px solid black;">Name</th>
                 {% for ac in account_type %}
@@ -51,8 +57,11 @@
             </tr>
 
             <script>
+                if (Number('{{forloop.counter}}') == 17){
+                    document.getElementById('blank{{a.id}}').style.display = 'table-row';
+                }
                 count += 1;
-                if (Number(count) == 10){
+                if (Number(count) == 17){
                     document.getElementById('heade{{a.id}}').style.display = 'table-row';
                     var count = 0
                 }
