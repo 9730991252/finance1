@@ -8,25 +8,6 @@
 
 
 <style>
-    .table {
-        padding: 1px;
-        display: grid;
-        
-
-        gap: 1px;
-        background-color: black;
-        div{
-            text-align: center;
-        }
-    }
-    .header {
-        font-weight: bold;
-        
-        grid-column-start: 1;
-        grid-column-end: 3;
-        font-size: 18px;
-        text-align: center;
-    }
     .btn-primary{
         display: none;
     }
@@ -36,14 +17,58 @@
 
 <div id="canvas">
     {% todays_collection %}
+    
+    <br>
+    <div class="text-center"><b>{{date}}</b></div>
+    <br>
 <div class="container">
-    {% for a in account_holder %}
-        <div class="header" style="position: relative; display: flex;justify-content: center;">
-            <div>{{a.holder_name}} </div>
-            <div>&nbsp; {{a.account_number}}</div>
-            <div style="position: absolute;right: 0;top: 0;"> <p style="font-weight: 400;font-size: 15px;" >{{a.date}}</p></div></div>
-        {% account_holder_daly_collection a.id %}
-    {% endfor %}
+    
+    <table class="table " style="border: 1px solid black;">
+        <thead class="" style="border-bottom: 1px solid black;">
+            <tr>
+                <th style="border-right: 1px solid black;">Name</th>
+                {% for a in account_type %}
+                    <th {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}>{{a.name}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <script>
+                var count = 0;
+            </script>
+            {% for a in account_holder %}
+            <tr style="border-bottom: 1px solid black;">
+                <td style="border-right: 1px solid black;">{{a.holder_name}}</td>
+                {% for ac in account_type %}
+                    <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}>{% account_total a.id ac.id %}</td>
+                {% endfor %}
+            </tr>
+            <tr id="heade{{a.id}}" style="border-bottom: 1px solid black; display: none;">
+                <th style="border-right: 1px solid black;">Name</th>
+                {% for ac in account_type %}
+                    <th {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}>{{ac.name}}</th>
+                {% endfor %}
+            </tr>
+
+            <script>
+                count += 1;
+                if (Number(count) == 10){
+                    document.getElementById('heade{{a.id}}').style.display = 'table-row';
+                    var count = 0
+                }
+            </script>
+
+            {% endfor %}
+
+            <tr style="border-bottom: 1px solid black;">
+                <td style="border-right: 1px solid black;">Total &nbsp; <b>{{total}}</b></td>
+                {% for ac in account_type %}
+                    <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}><b>{% account_type_total ac.id %}</b></td>
+                {% endfor %}
+            </tr>
+
+        </tbody>
+      </table>
 </div>
  
 <br>
@@ -65,9 +90,9 @@
             jsPDF: {unit: 'in',format: 'a4',orientaion: 'portrait' }
         };
         html2pdf().set(opt).from(pdf).save().then(pdfResult => {
-            window.location.replace("/office/office_home/");
+            // window.location.replace("/office/office_home/");
         });
     })
-    </script>
+    </script> 
     {% endblock content %}
     

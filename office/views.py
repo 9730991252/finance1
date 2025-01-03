@@ -3,6 +3,7 @@ from .models import *
 from django.contrib import messages
 import time
 from datetime import date
+from django.db.models import Avg, Sum, Min, Max
 # Create your views here.
 def office_home(request):
     if request.session.has_key('office_mobile'):
@@ -27,7 +28,10 @@ def daly_pdf(request):
                 account_holder.append({'id':a.id,'account_number':a.account_number,'holder_name':a.holder_name,'date':t.added_date})
         context={
             'e':e,
-            'account_holder':account_holder
+            'account_holder':account_holder,
+            'account_type':Account_type.objects.filter(status=1),
+            'date':date.today(),
+            'total': Transition.objects.filter(date=date.today()).aggregate(Sum('credit_amount'))['credit_amount__sum']
         }
         return render(request, 'office/daly_pdf.html', context)
     else:
