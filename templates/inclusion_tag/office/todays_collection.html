@@ -53,9 +53,9 @@
             <div>{{ o.name }}</div>
             <div>
                 {% for t in account_types %}
-                    <div style="display: grid;grid-template-columns: 1fr 1fr;">
-                        <div>{{t.name}} <b class="" style="font-size: 14px;font-weight: 500;">{% account_type_daly_collection_count o.id t.id %}</b></div>
-                        <div>{% account_type_daly_collection_total_amount o.id t.id %} </div>
+                    <div style="display: grid;grid-template-columns: 1fr 2fr;">
+                        <div>{{t.name}}</div>
+                        <div>{% account_type_daly_collection_total_amount o.id t.id %} <b class="" style="font-size: 14px;font-weight: 500;">{% account_type_daly_collection_count o.id t.id %}</b> </div>
                     </div>
                 {% endfor %}
             </div>
