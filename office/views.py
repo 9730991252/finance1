@@ -154,7 +154,6 @@ def employee(request):
                     messages.warning(request, f"Employee already exists with mobile number - {mobile}")
                 else:
                     Office_employee(
-                        added_by_id=e.id,
                         name=name,
                         mobile=mobile,
                         pin=pin,

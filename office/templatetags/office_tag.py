@@ -65,7 +65,15 @@ def check_account_holde_account(account_type_id, account_holder_id):
 def account_type_daly_collection_total_amount(office_employee_id, account_type_id):
     print(office_employee_id)
     amount = Transition.objects.filter(date=date.today(), collected_by_id=office_employee_id,account__account_type_id=account_type_id).aggregate(Sum('credit_amount'))
+    if amount['credit_amount__sum'] is None:
+        return 0
     return amount['credit_amount__sum']
+
+@register.simple_tag() 
+def account_type_daly_collection_count(office_employee_id, account_type_id):
+        count = Transition.objects.filter(date=date.today(), collected_by_id=office_employee_id,account__account_type_id=account_type_id).count()
+        return count
+
     
 @register.inclusion_tag('inclusion_tag/office/account_holder_last_five_transaction.html')
 def account_holder_last_five_transaction(account_id):
