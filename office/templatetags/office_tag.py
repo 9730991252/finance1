@@ -4,6 +4,7 @@ from django.db.models import Avg, Sum, Min, Max
 from math import *
 import math
 from datetime import date
+from django.utils.safestring import mark_safe
 register = template.Library()
 @register.simple_tag()
 def account_holder_available_balence(account_holder_id):
@@ -71,8 +72,11 @@ def account_type_daly_collection_total_amount(office_employee_id, account_type_i
 
 @register.simple_tag() 
 def account_type_daly_collection_count(office_employee_id, account_type_id):
-        count = Transition.objects.filter(date=date.today(), collected_by_id=office_employee_id,account__account_type_id=account_type_id).count()
-        return count
+    total_count = Account.objects.filter(account_type_id=account_type_id, status=1).count()
+    paid_count = Transition.objects.filter(date=date.today(), collected_by_id=office_employee_id,account__account_type_id=account_type_id).count()
+    un_paid_count = (int(total_count) - int(paid_count))
+    t = ('(<b class="text-success">'+ str(paid_count) +'</b> / <b class="text-danger">'+ str(un_paid_count) +'</b> = '+ str(total_count) +')')
+    return mark_safe(t)
 
     
 @register.inclusion_tag('inclusion_tag/office/account_holder_last_five_transaction.html')

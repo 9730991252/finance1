@@ -72,7 +72,7 @@
             <tr style="border-bottom: 1px solid black;">
                 <td style="border-right: 1px solid black;">Total &nbsp; <b>{{total}}</b></td>
                 {% for ac in account_type %}
-                    <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}><b>{% account_type_total ac.id %}</b> <b class="" style="font-size: 14px;font-weight: 500;">(p  {% account_type_daly_collection_count e.id ac.id %})</b></td>
+                    <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}><b>{% account_type_total ac.id %}</b> <b class="" style="font-size: 14px;font-weight: 500;">{% account_type_daly_collection_count e.id ac.id %}</b></td>
                 {% endfor %}
             </tr>
 
