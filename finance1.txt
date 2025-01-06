@@ -14,8 +14,8 @@ exit
 root
 cd finance1
 git pull
- systemctl daemon-reload
- systemctl restart finance1.com.gunicorn
+systemctl daemon-reload
+systemctl restart finance1.com.gunicorn
 exit
 
 _______________________________________
