@@ -16,6 +16,26 @@ def office_home(request):
     else:
         return redirect('login')
     
+def remaining_account_holder_collection(request, account_type_id):
+    if request.session.has_key('office_mobile'):
+        mobile = request.session['office_mobile']
+        e = Office_employee.objects.filter(mobile=mobile).first()
+        if e:
+            account_holders = Account_holder.objects.filter(status=1)
+            remaining_account_holders = []
+            for account_holder in account_holders:
+                if not Transition.objects.filter(account_holder_id=account_holder.id, date=date.today(), account__account_type_id=account_type_id).exists():
+                    remaining_account_holders.append(account_holder)
+            context = {
+                'e': e,
+                'remaining_account_holders': remaining_account_holders,
+            }
+            return render(request, 'office/remaining_account_holder_collection.html', context)
+        else:
+            return redirect('login')
+    else:
+        return redirect('login')
+    
 def daly_pdf(request):
     if request.session.has_key('office_mobile'):
         mobile = request.session['office_mobile']

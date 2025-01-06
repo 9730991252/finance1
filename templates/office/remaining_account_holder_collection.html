@@ -1,0 +1,48 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load office_tag %}
+{% include 'include/alert.html' %}
+<div>
+    welcome - {{e.name}}
+</div>
+{% include 'include/office/office_menu.html' %}
+<br><br>
+<style>
+    .holder_main_box{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+    }
+    .holder_box{
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 10px;
+        width: 400px;
+        margin: 0 auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px;
+    }
+    a{
+        color: #000;
+        text-decoration: none;
+    }
+</style>
+
+<div class="holder_main_box">
+    {% for h in remaining_account_holders %}
+    <a href="/office/account_holder_details_collection/1">
+        <div class="text-center holder_box text-danger">
+            <div><h6><b>{{h.holder_name}}</b></h6></div>
+            <div>खाते नंबर<b style="margin-top: -10px;">  {{h.account_number}}</b></div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock content %}
