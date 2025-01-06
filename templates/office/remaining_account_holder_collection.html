@@ -36,7 +36,7 @@
 
 <div class="holder_main_box">
     {% for h in remaining_account_holders %}
-    <a href="/office/account_holder_details_collection/1">
+    <a href="/office/account_holder_details_collection/{{h.id}}">
         <div class="text-center holder_box text-danger">
             <div><h6><b>{{h.holder_name}}</b></h6></div>
             <div>खाते नंबर<b style="margin-top: -10px;">  {{h.account_number}}</b></div>
