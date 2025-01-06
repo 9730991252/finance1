@@ -56,7 +56,7 @@
             <div>{{ o.name }}</div>
             <div>
                 {% for t in account_types %}
-                <a href="/office/remaining_account_holder_collection/{{o.id}}">
+                <a href="/office/remaining_account_holder_collection/{{t.id}}">
                     <div style="display: grid;grid-template-columns: 1fr 2fr;">
                         <div>{{t.name}}</div>
                         <div>{% account_type_daly_collection_total_amount o.id t.id %} <b class="" style="font-size: 14px;font-weight: 500;">{% account_type_daly_collection_count o.id t.id %}</b> </div>
