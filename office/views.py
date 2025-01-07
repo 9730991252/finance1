@@ -24,7 +24,7 @@ def remaining_account_holder_collection(request, account_type_id):
             account_holders = Account_holder.objects.filter(status=1)
             remaining_account_holders = []
             for account_holder in account_holders:
-                if  Account.objects.filter(account_holder_id=account_holder.id, account_type_id=account_type_id).exists():
+                if  Account.objects.filter(account_holder_id=account_holder.id, account_type_id=account_type_id, status=1).exists():
                     if not Transition.objects.filter(account_holder_id=account_holder.id, date=date.today(), account__account_type_id=account_type_id).exists():
                         remaining_account_holders.append(account_holder)
             context = {
