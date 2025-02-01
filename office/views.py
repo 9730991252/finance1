@@ -16,6 +16,17 @@ def office_home(request):
     else:
         return redirect('login')
     
+def report(request):
+    if request.session.has_key('office_mobile'):
+        mobile = request.session['office_mobile']
+        e = Office_employee.objects.filter(mobile=mobile).first()
+        context={
+            'e':e,
+        }
+        return render(request, 'office/report.html', context)
+    else:
+        return redirect('login')
+    
 def remaining_account_holder_collection(request, account_type_id):
     if request.session.has_key('office_mobile'):
         mobile = request.session['office_mobile']
@@ -36,6 +47,7 @@ def remaining_account_holder_collection(request, account_type_id):
             return redirect('login')
     else:
         return redirect('login')
+    
     
 def daly_pdf(request):
     if request.session.has_key('office_mobile'):

@@ -19,3 +19,25 @@ def account_type_daly_collection_pdf(request, id):
             'account_type':Account_type.objects.filter(id=id).first()
         }
         return render(request, 'pdf/account_type_daly_collection_pdf.html', context)
+
+def all_report_pdf(request, from_date, to_date):
+    if request.session.has_key('office_mobile'):
+        mobile = request.session['office_mobile']
+        e = Office_employee.objects.filter(mobile=mobile).first()
+        account_holder = []
+        a = Account_holder.objects.filter(status=1)
+        for a in a:
+            t = Transition.objects.filter(account_holder_id=a.id,date__gte=from_date,date__lte=to_date).first()
+            if t != None:
+                account_holder.append({'id':a.id,'account_number':a.account_number,'holder_name':a.holder_name,'date':t.added_date})
+        context = {
+            'e':e,
+            
+            'account_holder':account_holder,
+            'from_date': from_date,
+            'to_date': to_date,
+            'account_type':Account_type.objects.filter(status=1),
+        }
+        return render(request, 'pdf/all_report_pdf.html', context)
+    else:
+        return redirect('login')

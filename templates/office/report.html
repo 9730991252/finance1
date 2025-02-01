@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load office_tag %}
+{% include 'include/alert.html' %}
+<div>
+    welcome - {{e.name}}
+</div>
+{% include 'include/office/office_menu.html' %}
+<br>
+
+
+<div class="container">
+    <div>
+        <label for="from_date">From Date</label>
+        <input type="date" name="from_date" id="from_date" class="form-control" required>
+    </div>
+    <br>
+    <div>
+        <label for="to_date">To Date</label>
+        <input type="date" name="to_date" id="to_date" class="form-control" required>
+    </div>
+    <br>
+    <button onclick="chang_page()"  name="search_report" class="btn btn-primary">Download <i class="fa fa-download" aria-hidden="true"></i></button>
+</div>
+
+<br>
+<script>
+    function chang_page() {
+        var from_date = document.getElementById("from_date").value;
+        var to_date = document.getElementById("to_date").value;
+        if (from_date == '')
+        {
+            alert("Please select from date");
+            return false;
+        }
+        if (to_date == '')
+        {
+            alert("Please select to date");
+            return false;
+        }
+        else{
+            window.location.href = "/pdf/all_report_pdf/" + from_date + "/" + to_date;
+        } 
+    }
+ 
+</script>
+
+{% endblock content %}
