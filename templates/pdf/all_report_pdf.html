@@ -71,7 +71,7 @@
             <tr style="border-bottom: 1px solid black;">
                 <td style="border-right: 1px solid black;">Total &nbsp; <b>{{total}}</b></td>
                 {% for ac in account_type %}
-                    <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}><b>{%  account_type_total from_date to_date ac.id %}</b></td>
+                    <td {% if forloop.last %}{% else %}style="border-right: 1px solid black;"{% endif %}><b>{%  account_type_total_report from_date to_date ac.id %}</b></td>
                 {% endfor %}
             </tr>
 

@@ -159,7 +159,7 @@ def account_type_total(account_type_id):
     return total
 
 @register.simple_tag()
-def account_type_total(from_date, to_date ,account_type_id):
+def account_type_total_report(from_date, to_date ,account_type_id):
     tr = Transition.objects.filter(account__account_type_id=account_type_id,date__gte=from_date,date__lte=to_date)
     t = tr.aggregate(Sum('credit_amount'))['credit_amount__sum']
     if t is None:
